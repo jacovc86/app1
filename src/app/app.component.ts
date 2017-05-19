@@ -1,10 +1,26 @@
 import { Component } from '@angular/core';
 
 import { User, UserService } from './services/user.service';
+
 @Component({
   selector: 'app-root',
   template: `
-    <app-login (loggedIn)="login($event)" (loggedOut)="logout()"></app-login>
+    <app-header></app-header>
+    <md-toolbar>
+      <md-tab-group>
+          <md-tab>
+            <ng-template md-tab-label>
+              <a class="block" routerLink="">Home</a>
+            </ng-template>
+          </md-tab>
+          <md-tab label="New Product">
+            <ng-template md-tab-label>
+              <a class="block" routerLink="/product-submit">New Product</a>
+            </ng-template>
+          </md-tab>
+      </md-tab-group>
+    </md-toolbar>
+    <router-outlet></router-outlet>
   `,
   styles: []
 })
@@ -12,12 +28,4 @@ export class AppComponent {
 
   constructor(private _userService: UserService) {}
 
-  login(username: string) {
-    const user = new User(username);
-    this._userService.setUser(user);
-  }
-
-  logout(): void {
-    this._userService.setUser(null);
-  }
 }
